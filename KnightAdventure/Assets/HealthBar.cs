@@ -12,7 +12,7 @@ public class HealthBar : MonoBehaviour
     void Start()
     {
         slider = GetComponent<Slider>();
-        slider.maxValue = playerController.maxHealth;
+        slider.maxValue = DataPlayer.maxHealth;
         slider.value = slider.maxValue;
         
     }
@@ -24,7 +24,8 @@ public class HealthBar : MonoBehaviour
 
     public static void Heart()
     {
-        slider.value += 5;
+        DataPlayer.maxHealth += 5;
+        slider.value = DataPlayer.maxHealth;
     }
 
 

@@ -9,6 +9,7 @@ public class BotController : MonoBehaviour
 {
     private Animator m_animator;
     private Rigidbody2D m_body2d;
+    public Transform Player;
     
     public float speed;
     public static event Action OnBotDeath;
@@ -41,13 +42,24 @@ public class BotController : MonoBehaviour
     void Update()
     {
         
-
-        transform.Translate(Time.deltaTime * speed * transform.right);
-
-        if(!Physics2D.OverlapCircle(groundCheck.position, grondCheckRadius, groundLayer))
+        if (Vector2.Distance(Player.position, attackPoint.position) <= attackRange)
         {
-            Flip();
+            m_animator.SetTrigger("attack");
+            
         }
+        else
+        {
+           
+            m_animator.ResetTrigger("attack");
+            transform.Translate(Time.deltaTime * speed * transform.right);
+
+            if (!Physics2D.OverlapCircle(groundCheck.position, grondCheckRadius, groundLayer))
+            {
+                Flip();
+            }
+        }
+
+        
     }
 
     private void Flip()
@@ -68,8 +80,7 @@ public class BotController : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHeath -= damage;
-        m_animator.SetTrigger("attack");
-        botAttack();
+        
         Debug.Log("HP bot:" + currentHeath);
 
         if (currentHeath <= 0)

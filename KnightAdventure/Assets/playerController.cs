@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class playerController : MonoBehaviour
 {
@@ -12,12 +13,7 @@ public class playerController : MonoBehaviour
     public float attackRange = 0.5f;
     public LayerMask enemyLayers;
 
-    public static int maxHealth = 100;
-    
-    int currentHeath;
-
-
-    public int attackDamage = 20;
+   
     private bool grounded = false;
     public int jumpHeight = 15;
 
@@ -26,14 +22,10 @@ public class playerController : MonoBehaviour
     {
         m_animator = GetComponent<Animator>();
         m_body2d = GetComponent<Rigidbody2D>();
-        currentHeath = maxHealth;
-        BotController.OnBotDeath += increaseExp;
+        DataPlayer.currentHeath = DataPlayer.maxHealth;
     }
 
-    public void increaseExp()
-    {
-       
-    }
+    
 
 
     // Update is called once per frame
@@ -65,7 +57,7 @@ public class playerController : MonoBehaviour
         // enter mouse left to hero attack 
         if (Input.GetMouseButtonDown(0))
         {
-            heroAttack();
+            m_animator.SetTrigger("attack");
         }
 
         if (Input.GetKey(KeyCode.Space))
@@ -83,7 +75,7 @@ public class playerController : MonoBehaviour
     private void heroAttack()
     {
         // set animation attack
-        m_animator.SetTrigger("attack");
+        
 
         // detack enermy in range of attack
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
@@ -91,7 +83,7 @@ public class playerController : MonoBehaviour
         //Damage
         foreach (Collider2D enemy in hitEnemies)
         {
-            enemy.GetComponent<BotController>().TakeDamage(attackDamage);
+            enemy.GetComponent<BotController>().TakeDamage(DataPlayer.attackDamage);
         }
 
     }
@@ -100,11 +92,11 @@ public class playerController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currentHeath -= damage;
-        HealthBar.SettingHealth(currentHeath);
-        Debug.Log("HP hero:" + currentHeath);
+        DataPlayer.currentHeath -= damage;
+        HealthBar.SettingHealth(DataPlayer.currentHeath);
+        Debug.Log("HP hero:" + DataPlayer.currentHeath);
 
-        if (currentHeath <= 0)
+        if (DataPlayer.currentHeath <= 0)
         {
             Die();
         }
@@ -127,6 +119,10 @@ public class playerController : MonoBehaviour
         if (other.gameObject.tag == "Heart")
         {
             HealthBar.Heart();
+        }
+        if (other.gameObject.tag == "Finish")
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 
