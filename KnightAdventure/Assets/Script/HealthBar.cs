@@ -24,7 +24,7 @@ public class HealthBar : MonoBehaviour
 
     public static void Heart()
     {
-        DataPlayer.currentHeath += 5;
+        DataPlayer.currentHeath += 10;
         slider.value = DataPlayer.currentHeath;
     }
 

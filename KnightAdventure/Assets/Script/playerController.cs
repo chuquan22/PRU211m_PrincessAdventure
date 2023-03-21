@@ -19,6 +19,12 @@ public class playerController : MonoBehaviour
     private bool grounded = false;
     public int jumpHeight = 15;
 
+    public int combo;
+    public bool IsCombo;
+    public int NoOfClick = 0;
+    public float lastClickTime = 0;
+    public float maxComboDelay = 0.9f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -61,8 +67,12 @@ public class playerController : MonoBehaviour
         // enter mouse left to hero attack 
         if (Input.GetMouseButtonDown(0))
         {
-            m_animator.SetTrigger("attack");
-            
+            m_animator.SetInteger("Attack", 1);
+
+        }
+        else
+        {
+            m_animator.SetInteger("Attack", 0);
         }
 
         if (Input.GetKey(KeyCode.Space))
@@ -77,6 +87,31 @@ public class playerController : MonoBehaviour
         }
     }
 
+    public void ComboAttack()
+    {
+        if(Input.GetMouseButtonDown(0) && !IsCombo)
+        {
+            IsCombo = true;
+            m_animator.SetInteger("Attack", combo);
+           
+        }
+    }
+
+    public void StartCombo()
+    {
+        IsCombo = false;
+        if(combo < 4)
+        {
+            combo++;
+        }
+    }
+
+    public void FinishCombo()
+    {
+        IsCombo = false;
+
+    }
+
     private void heroAttack()
     {
         // set animation attack
@@ -88,7 +123,16 @@ public class playerController : MonoBehaviour
         //Damage
         foreach (Collider2D enemy in hitEnemies)
         {
-            enemy.GetComponent<BotController>().TakeDamage(DataPlayer.attackDamage);
+            if (enemyLayers.Equals("enermy"))
+            {
+                enemy.GetComponent<BotController>().TakeDamage(DataPlayer.attackDamage);
+            }
+            else
+            {
+                enemy.GetComponent<BossHealth>().TakeDamage(DataPlayer.attackDamage);
+            }
+           
+
         }
 
     }

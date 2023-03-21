@@ -44,13 +44,13 @@ public class BotController : MonoBehaviour
 
         if (Vector2.Distance(Player.position, attackPoint.position) <= attackRange && DataPlayer.currentHeath >0)
         {
-            m_animator.SetTrigger("attack");
-
+            m_animator.SetBool("IsAttacking", true);
+            m_animator.SetFloat("Speed", 0);
         }
         else
         {
-
-            m_animator.ResetTrigger("attack");
+            m_animator.SetBool("IsAttacking", false);
+            m_animator.SetFloat("Speed", 1);
             transform.Translate(Time.deltaTime * speed * transform.right);
 
             if (!Physics2D.OverlapCircle(groundCheck.position, grondCheckRadius, groundLayer) || Physics2D.OverlapCircle(attackPoint.position, grondCheckRadius, groundLayer))
@@ -109,6 +109,7 @@ public class BotController : MonoBehaviour
     public void Die()
     {
         OnBotDeath?.Invoke();
+        m_animator.SetBool("IsAlive", false);
         GameObject.Destroy(this.gameObject);
         Debug.Log("die");
     }
