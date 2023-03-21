@@ -12,22 +12,25 @@ public class ExpBar : MonoBehaviour
     void Start()
     {
         slider = GetComponent<Slider>();
-        slider.maxValue = 100;
-        slider.value = 0;
+        slider.maxValue = DataPlayer.maxValueExp;
+        slider.value = DataPlayer.valueExp;
         BotController.OnBotDeath += increaseExp;
+        textMeshPro.text = DataPlayer.level.ToString();
     }
 
     
 
     public void increaseExp()
     {
-        slider.value += 10;
-        if (slider.value == 100)
+        slider.value = DataPlayer.valueExp += 10;
+        if (slider.value == slider.maxValue)
         {
-            playerController.maxHealth += 20;
-            //playerController.defend += 2;
-            slider.value = 0;
-            textMeshPro.text = (int.Parse(textMeshPro.text) + 1).ToString();
+            DataPlayer.maxHealth += 20;
+            DataPlayer.maxValueExp += 20;
+            DataPlayer.attackDamage += 3;
+            DataPlayer.valueExp = 0;
+            DataPlayer.level += 1;
+            textMeshPro.text = DataPlayer.level.ToString();
         }
     }
 
