@@ -9,6 +9,7 @@ public class BotController : MonoBehaviour
 {
     private Animator m_animator;
     private Rigidbody2D m_body2d;
+    public Transform Player;
     
     public float speed;
     public static event Action OnBotDeath;
@@ -40,14 +41,25 @@ public class BotController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
 
-        transform.Translate(Time.deltaTime * speed * transform.right);
-
-        if(!Physics2D.OverlapCircle(groundCheck.position, grondCheckRadius, groundLayer))
+        if (Vector2.Distance(Player.position, attackPoint.position) <= attackRange && DataPlayer.currentHeath >0)
         {
-            Flip();
+            m_animator.SetTrigger("attack");
+
         }
+        else
+        {
+
+            m_animator.ResetTrigger("attack");
+            transform.Translate(Time.deltaTime * speed * transform.right);
+
+            if (!Physics2D.OverlapCircle(groundCheck.position, grondCheckRadius, groundLayer) || Physics2D.OverlapCircle(attackPoint.position, grondCheckRadius, groundLayer))
+            {
+                Flip();
+            }
+        }
+
+        
     }
 
     private void Flip()
@@ -68,8 +80,7 @@ public class BotController : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHeath -= damage;
-        m_animator.SetTrigger("attack");
-        botAttack();
+        
         Debug.Log("HP bot:" + currentHeath);
 
         if (currentHeath <= 0)
@@ -103,14 +114,7 @@ public class BotController : MonoBehaviour
     }
 
     
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.gameObject.tag == "Player")
-        {
-            m_body2d.bodyType = RigidbodyType2D.Static;
-            m_body2d.velocity = Vector2.zero;
-        }
-    }
+   
 
     
 }
