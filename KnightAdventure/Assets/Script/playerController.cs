@@ -64,16 +64,8 @@ public class playerController : MonoBehaviour
         // Move
         m_body2d.velocity = new Vector2(inputX * m_speed, m_body2d.velocity.y);
 
-        // enter mouse left to hero attack 
-        if (Input.GetMouseButtonDown(0))
-        {
-            m_animator.SetInteger("Attack", 1);
+        
 
-        }
-        else
-        {
-            m_animator.SetInteger("Attack", 0);
-        }
 
         if (Input.GetKey(KeyCode.Space))
         {
@@ -85,31 +77,71 @@ public class playerController : MonoBehaviour
             }
 
         }
+
+        if(Time.time - lastClickTime > maxComboDelay)
+        {
+            NoOfClick = 0;
+        }
+
+        // enter mouse left to hero attack 
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            lastClickTime = Time.time;
+            NoOfClick++;
+            if (NoOfClick == 1)
+            {
+                m_animator.SetInteger("Attack", 1);
+            }
+            NoOfClick = Math.Clamp(NoOfClick, 0, 4);
+
+        }
+
     }
 
-    public void ComboAttack()
+    public void return1()
     {
-        if(Input.GetMouseButtonDown(0) && !IsCombo)
+        if(NoOfClick >= 2)
         {
-            IsCombo = true;
-            m_animator.SetInteger("Attack", combo);
-           
+            m_animator.SetInteger("Attack", 2);
+        }
+        else
+        {
+            m_animator.SetInteger("Attack", 0);
+            NoOfClick = 0;
         }
     }
 
-    public void StartCombo()
+    public void return2()
     {
-        IsCombo = false;
-        if(combo < 4)
+        if (NoOfClick >= 3)
         {
-            combo++;
+            m_animator.SetInteger("Attack", 3);
+        }
+        else
+        {
+            m_animator.SetInteger("Attack", 0);
+            NoOfClick = 0;
+        }
+    }
+    public void return3()
+    {
+        if (NoOfClick >= 4)
+        {
+            m_animator.SetInteger("Attack", 4);
+        }
+        else
+        {
+            m_animator.SetInteger("Attack", 0);
+            NoOfClick = 0;
         }
     }
 
-    public void FinishCombo()
+    public void return4()
     {
-        IsCombo = false;
-
+        m_animator.SetInteger("Attack", -1);
+        NoOfClick = 0;
+        
     }
 
     private void heroAttack()
@@ -131,8 +163,7 @@ public class playerController : MonoBehaviour
             {
                 enemy.GetComponent<BossHealth>().TakeDamage(DataPlayer.attackDamage);
             }
-           
-
+               
         }
 
     }
@@ -156,12 +187,16 @@ public class playerController : MonoBehaviour
     public void Die()
     {
         m_animator.SetBool("IsAlive", false);
-        GetComponent<Collider2D>().enabled = false;
-        this.enabled = false;
-        m_body2d.bodyType = RigidbodyType2D.Static;
         Debug.Log("die");
-        
+        //Invoke("GameOver", 2f);
     }
+
+    public void GameOver()
+    {
+        DataPlayer.ReStartGame();
+        SceneManager.LoadSceneAsync(2, LoadSceneMode.Single);
+    }
+    
 
     private void OnCollisionEnter2D(Collision2D other)
     {

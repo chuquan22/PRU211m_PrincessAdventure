@@ -15,5 +15,20 @@ public class DataPlayer : MonoBehaviour
     public static int valueExp = PlayerPrefs.GetInt("Exp", 0);
 
     public static int level = PlayerPrefs.GetInt("Level", 1);
+
+    public static void ReStartGame()
+    {
+     maxHealth =  100;
+
+     currentHeath = 100;
+
+     attackDamage =  20;
+
+     maxValueExp =  100;
+
+     valueExp =  0;
+
+     level =  1;
+}
     
 }
