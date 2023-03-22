@@ -156,8 +156,9 @@ public class playerController : MonoBehaviour
     public void Die()
     {
         m_animator.SetBool("IsAlive", false);
-        
-        //GameObject.Destroy(this.gameObject);
+        GetComponent<Collider2D>().enabled = false;
+        this.enabled = false;
+        m_body2d.bodyType = RigidbodyType2D.Static;
         Debug.Log("die");
         
     }
@@ -175,12 +176,8 @@ public class playerController : MonoBehaviour
         }
         if (other.gameObject.tag == "Finish")
         {
-            PlayerPrefs.SetInt("HP", DataPlayer.currentHeath);
-            PlayerPrefs.SetInt("MaxHP", DataPlayer.maxHealth);
-            PlayerPrefs.SetInt("Exp", DataPlayer.valueExp);
-            PlayerPrefs.SetInt("MaxExp", DataPlayer.maxValueExp);
-            PlayerPrefs.SetInt("Damage", DataPlayer.attackDamage);
-            PlayerPrefs.SetInt("Level", DataPlayer.level);
+            dataTransmissionPlayer();
+            dataTransmissionBot();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
         }
@@ -190,5 +187,21 @@ public class playerController : MonoBehaviour
         }
     }
 
+
+    public void dataTransmissionPlayer()
+    {
+        PlayerPrefs.SetInt("HP", DataPlayer.currentHeath);
+        PlayerPrefs.SetInt("MaxHP", DataPlayer.maxHealth);
+        PlayerPrefs.SetInt("Exp", DataPlayer.valueExp);
+        PlayerPrefs.SetInt("MaxExp", DataPlayer.maxValueExp);
+        PlayerPrefs.SetInt("Damage", DataPlayer.attackDamage);
+        PlayerPrefs.SetInt("Level", DataPlayer.level);
+    }
+
+    public void dataTransmissionBot()
+    {
+        PlayerPrefs.SetInt("HPBot", DataBot.Health + 50);
+        PlayerPrefs.SetInt("BotDamage", DataBot.Attack + 5);
+    }
 
 }

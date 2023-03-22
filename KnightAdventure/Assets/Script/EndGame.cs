@@ -19,7 +19,7 @@ public class EndGame : MonoBehaviour
 
     void Restart()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Map1");
     }
 
     void MainMenu()

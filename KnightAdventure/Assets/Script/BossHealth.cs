@@ -18,10 +18,10 @@ public class BossHealth : MonoBehaviour
 
         health -= damage;
 
-        if (health <= 200)
+        /*if (health <= 200)
         {
             GetComponent<Animator>().SetBool("IsEnraged", true);
-        }
+        }*/
 
         if (health <= 0)
         {

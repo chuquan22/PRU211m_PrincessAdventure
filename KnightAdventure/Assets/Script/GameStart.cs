@@ -22,7 +22,7 @@ public class GameStart : MonoBehaviour
 
     void StartGame()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Map1");
     }
 
     void QuitGame()

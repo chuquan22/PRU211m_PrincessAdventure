@@ -18,10 +18,6 @@ public class BotController : MonoBehaviour
     public float attackRange = 0.5f;
     public LayerMask enemyLayers;
 
-    public int attackDamage = 10;
-
-
-    public static int maxHealth = 100;
     int currentHeath;
 
     public Transform groundCheck;
@@ -34,7 +30,7 @@ public class BotController : MonoBehaviour
     {
         m_animator = GetComponent<Animator>();
         m_body2d = GetComponent<Rigidbody2D>();
-        currentHeath = maxHealth;
+        currentHeath = DataBot.Health;
 
     }
 
@@ -101,7 +97,7 @@ public class BotController : MonoBehaviour
         //Damage
         foreach (Collider2D enemy in hitEnemies)
         {
-            enemy.GetComponent<playerController>().TakeDamage(attackDamage);
+            enemy.GetComponent<playerController>().TakeDamage(DataBot.Attack);
         }
 
     }
