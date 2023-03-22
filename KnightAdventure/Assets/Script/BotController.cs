@@ -106,12 +106,21 @@ public class BotController : MonoBehaviour
     {
         OnBotDeath?.Invoke();
         m_animator.SetBool("IsAlive", false);
-        GameObject.Destroy(this.gameObject);
+        Invoke("BotDie", 2f);
         Debug.Log("die");
     }
 
-    
-   
+    public void BotDie()
+    {
+        this.gameObject.SetActive(false);
+        Invoke("Botrevival", 40f);
+    }
 
-    
+    public void Botrevival()
+    {
+        this.gameObject.SetActive(true);
+    }
+
+
+
 }

@@ -10,7 +10,7 @@ public class DataPlayer : MonoBehaviour
 
     public static int attackDamage = PlayerPrefs.GetInt("Damage", 20);
 
-    public static int maxValueExp = PlayerPrefs.GetInt("MaxExp", 100);
+    public static int maxValueExp = PlayerPrefs.GetInt("MaxExp", 30);
 
     public static int valueExp = PlayerPrefs.GetInt("Exp", 0);
 

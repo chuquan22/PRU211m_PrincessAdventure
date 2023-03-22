@@ -162,7 +162,7 @@ public class playerController : MonoBehaviour
                 enemy.GetComponent<BossHealth>().TakeDamage(DataPlayer.attackDamage);
             }*/
 
-            enemy.GetComponent<BossHealth>().TakeDamage(DataPlayer.attackDamage);
+            enemy.GetComponent<BotController>().TakeDamage(DataPlayer.attackDamage);
 
 
         }
