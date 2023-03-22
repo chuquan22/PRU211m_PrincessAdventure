@@ -3,15 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Ground
-<<<<<<< Updated upstream
-=======
-  - Heart
-  - Point
-  - Welcome
-  - CotTruyen
->>>>>>> Stashed changes
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -19,9 +11,9 @@ TagManager:
   - 
   - Water
   - UI
-  - enermy
-  - player
-  - Ground
+  - 
+  - 
+  - 
   - 
   - 
   - 
@@ -48,7 +40,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: player
-    uniqueID: 263293293
     locked: 0
