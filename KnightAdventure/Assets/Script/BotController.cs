@@ -76,7 +76,7 @@ public class BotController : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHeath -= damage;
-        
+        BotHealth.SettingHealth(currentHeath);
         Debug.Log("HP bot:" + currentHeath);
 
         if (currentHeath <= 0)

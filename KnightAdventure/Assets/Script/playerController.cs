@@ -146,8 +146,6 @@ public class playerController : MonoBehaviour
 
     private void heroAttack()
     {
-        // set animation attack
-        
 
         // detack enermy in range of attack
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
@@ -155,15 +153,18 @@ public class playerController : MonoBehaviour
         //Damage
         foreach (Collider2D enemy in hitEnemies)
         {
-            if (enemyLayers.Equals("enermy"))
+            /*if (enemyLayers.value == 576)
             {
                 enemy.GetComponent<BotController>().TakeDamage(DataPlayer.attackDamage);
             }
             else
             {
                 enemy.GetComponent<BossHealth>().TakeDamage(DataPlayer.attackDamage);
-            }
-               
+            }*/
+
+            enemy.GetComponent<BossHealth>().TakeDamage(DataPlayer.attackDamage);
+
+
         }
 
     }
@@ -188,7 +189,8 @@ public class playerController : MonoBehaviour
     {
         m_animator.SetBool("IsAlive", false);
         Debug.Log("die");
-        //Invoke("GameOver", 2f);
+        m_body2d.bodyType = RigidbodyType2D.Static;
+        Invoke("GameOver", 2f);
     }
 
     public void GameOver()
