@@ -5,8 +5,13 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+<<<<<<< Updated upstream
+=======
   - Heart
   - Point
+  - Welcome
+  - CotTruyen
+>>>>>>> Stashed changes
   layers:
   - Default
   - TransparentFX
@@ -17,7 +22,7 @@ TagManager:
   - enermy
   - player
   - Ground
-  - Boss
+  - 
   - 
   - 
   - 

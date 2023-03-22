@@ -22,7 +22,11 @@ public class GameStart : MonoBehaviour
 
     void StartGame()
     {
-        SceneManager.LoadScene("Map1");
+<<<<<<< Updated upstream:KnightAdventure/Assets/GameStart.cs
+        SceneManager.LoadScene(0);
+=======
+        SceneManager.LoadScene("CotTruyen");
+>>>>>>> Stashed changes:KnightAdventure/Assets/Script/GameStart.cs
     }
 
     void QuitGame()
